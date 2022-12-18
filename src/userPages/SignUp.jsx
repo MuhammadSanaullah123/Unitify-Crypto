@@ -135,7 +135,7 @@ const SignUp = () => {
                 <span className="checkpS">
                   Agree to
                   <Link
-                    to="/signup/termconditions"
+                    to="/termconditions"
                     style={{
                       color: "#00B4FF",
                       textDecoration: "underline",

@@ -1,9 +1,1082 @@
 :root {
-  --primary: #e94b41; //primary color
+  --primary: #00b4ff; //primary color
   --secondary: #2683ff; // secondary color
+  max-width: 1400px;
+  margin: 0 auto;
 }
 /*---------------------------- CSS CODE START FOR USER:LOGIN PAGE----------------- */
 /***********************************************************************************/
 
+.line {
+  background: linear-gradient(
+    90deg,
+    rgba(155, 171, 191, 0) 1.04%,
+    #9babbf 51.56%,
+    rgba(155, 171, 191, 0) 100%
+  );
+  width: 95%;
+  height: 1.5px;
+  margin-bottom: 15px;
+}
+.mainloginDiv {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0;
+  .bigDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 528px;
 
-/*---------------------------- CSS CODE END FOR USER:Product Componen--------------/
+    @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+      width: 428px;
+    }
+    @media (max-width: 540px) {
+      width: 85%;
+    }
+    @media (max-width: 480px) {
+      width: 95%;
+    }
+    .circleDiv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      top: 60px;
+      padding: 30px;
+      margin: 0 auto;
+      border-radius: 50%;
+      box-shadow: 0px -20px 20px rgb(0 0 0 / 8%);
+      background-color: white;
+      z-index: 99;
+      .circleDiv2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 108px;
+        height: 108px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        z-index: 999;
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          width: 95px;
+          height: 95px;
+        }
+        @media (max-width: 540px) {
+          width: 90px;
+          height: 90px;
+        }
+        .circleDiv2pic {
+          filter: invert(48%) sepia(90%) saturate(1707%) hue-rotate(167deg)
+            brightness(102%) contrast(110%);
+          @media (max-width: 540px) {
+            width: 60px;
+            height: 60px;
+          }
+        }
+      }
+      @media (max-width: 540px) {
+        padding: 22px;
+      }
+      @media (max-width: 320px) {
+        padding: 20px;
+      }
+    }
+
+    .smallDiv {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 528px;
+      // height: 356px;
+      background: #ffffff;
+      box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.25);
+      z-index: 2;
+      border-radius: 6px;
+      justify-content: space-evenly;
+      padding-top: 50px;
+      @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+        width: 428px;
+      }
+      @media (max-width: 540px) {
+        width: 100%;
+      }
+
+      .input-container {
+        display: flex;
+        width: 426px;
+        height: 58px;
+        background: #ebeaea;
+        border-radius: 5px;
+        margin: 10px 0;
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          width: 350px;
+          height: 43px;
+        }
+        @media (max-width: 540px) {
+          width: 85%;
+        }
+        .inputimgback {
+          display: flex;
+          background-color: var(--primary);
+          align-items: center;
+          justify-content: center;
+          width: 54px;
+          height: 58px;
+          border-radius: 5px 0px 0px 5px;
+          @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+            height: 43px;
+            width: 50px;
+          }
+        }
+        .inputimg {
+          width: 38px;
+          height: 38px;
+        }
+        .input-field {
+          width: 100%;
+          background: #ebeaea;
+          border: 0px;
+          font-size: 20px;
+          font-family: "Inter";
+          @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+            font-size: 17px;
+          }
+          padding-left: 15px;
+        }
+        .input-field:focus {
+          outline: none;
+        }
+        ::placeholder {
+          font-family: "Inter";
+          font-weight: 400;
+          font-size: 20px;
+          color: #937a7a;
+          //   padding-left: 30px;
+          @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+            font-size: 17px;
+          }
+        }
+      }
+      .check-container {
+        display: flex;
+        width: 426px;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        align-items: center;
+        margin-top: 10px;
+
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          width: 350px;
+        }
+        @media (max-width: 540px) {
+          width: 85%;
+        }
+        .form-check-input {
+          height: 14px;
+          width: 14px;
+        }
+        .checkp {
+          font-family: "Inter";
+          font-weight: 300;
+          font-size: 13px;
+          color: #464646;
+          margin-top: 0;
+          margin-left: 8px;
+          margin-bottom: 0;
+        }
+        .checkp2 {
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 13px;
+          color: var(--primary);
+          text-decoration: none;
+        }
+        .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+        .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+          color: var(--primary);
+        }
+      }
+    }
+  }
+  .l1 {
+    text-decoration: none;
+  }
+  .btn1 {
+    width: 198px;
+    height: 59px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    box-shadow: 0px 0px 7px;
+    border-radius: 4px;
+    border: 0;
+    cursor: pointer;
+    @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+      width: 170px !important;
+    }
+  }
+  .mainDivp1 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    color: #473d3d;
+  }
+  .mainimgDiv {
+    display: flex;
+    width: 150px;
+    margin-bottom: 50px;
+    justify-content: space-around;
+    .imgDiv {
+      width: 62px;
+      height: 50px;
+      background: #c54238;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+        width: 52px !important;
+        height: 40px !important;
+      }
+      .endimg {
+        width: 32px;
+        height: 32px;
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          width: 25px !important;
+          height: 25px !important;
+        }
+      }
+    }
+  }
+}
+
+/*---------------------------- CSS CODE END FOR USER:LOGIN PAGE-------------------------- */
+
+/*---------------------------- CSS CODE START FOR USER:SIGNUP PAGE----------------- */
+/***********************************************************************************/
+.mainsignupDiv {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .bigDivS {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 528px;
+    height: 548px;
+    background: #ffffff;
+    @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+      width: 428px;
+      height: 500px;
+    }
+    @media (max-width: 540px) {
+      width: 95%;
+    }
+    .circleDiv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      top: 60px;
+      padding: 30px;
+      margin: 0 auto;
+      border-radius: 50%;
+      box-shadow: 0px -20px 20px rgb(0 0 0 / 8%);
+      background-color: white;
+      z-index: 99;
+      @media (max-width: 400px) {
+        padding: 25px;
+      }
+      .circleDiv2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 108px;
+        height: 108px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        z-index: 999;
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          width: 95px;
+          height: 95px;
+        }
+        @media (max-width: 540px) {
+          width: 90px;
+          height: 90px;
+        }
+        @media (max-width: 400px) {
+          width: 80px;
+          height: 80px;
+        }
+        .circleDiv2pic {
+          filter: invert(48%) sepia(90%) saturate(1707%) hue-rotate(167deg)
+            brightness(102%) contrast(110%);
+
+          @media (max-width: 540px) {
+            width: 60px;
+            height: 60px;
+          }
+        }
+      }
+    }
+
+    .smallDivS {
+      padding-top: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 528px;
+      height: 370px;
+      background: #ffffff;
+      box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.25);
+      z-index: 2;
+      border-radius: 6px;
+      justify-content: space-evenly;
+      @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+        width: 428px;
+        height: 270px;
+
+        justify-content: space-between;
+      }
+      @media (max-width: 1000px) {
+        padding-top: 50px;
+      }
+      @media (max-width: 540px) {
+        width: 100%;
+        padding-top: 45px;
+      }
+
+      .input-container {
+        display: flex;
+        width: 426px;
+        height: 58px;
+        background: #ebeaea;
+        border-radius: 5px;
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          width: 350px;
+          height: 43px;
+        }
+        @media (max-width: 540px) {
+          width: 90%;
+        }
+        @media (max-width: 500px) {
+          width: 90%;
+          height: 43px;
+        }
+        .inputimgback {
+          display: flex;
+          background-color: var(--primary);
+          align-items: center;
+          justify-content: center;
+          width: 54px;
+          height: 58px;
+          border-radius: 5px 0px 0px 5px;
+          @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+            height: 43px;
+            width: 50px;
+          }
+          @media (max-width: 500px) {
+            height: 43px;
+          }
+        }
+        .inputimg {
+          width: 38px;
+          height: 38px;
+        }
+        .input-field {
+          width: 100%;
+          background: #ebeaea;
+          border: 0px;
+          font-size: 16px;
+          padding-left: 15px;
+          font-family: "Inter";
+        }
+        .input-field:focus {
+          outline: none;
+        }
+        ::placeholder {
+          font-family: "Inter";
+          font-weight: 400;
+          font-size: 16px;
+          color: #937a7a;
+          //  padding-left: 30px;
+        }
+      }
+      .check-container {
+        display: flex;
+        width: 426px;
+        align-items: center;
+        justify-content: space-between;
+
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          width: 350px;
+          height: 43px;
+        }
+        @media (max-width: 540px) {
+          width: 90%;
+        }
+
+        .form-check-input {
+          height: 14px;
+          width: 14px;
+        }
+        .checkpS {
+          font-family: "Inter";
+          font-weight: 300;
+          font-size: 13px;
+          color: #464646;
+          margin-top: 0;
+          margin-left: 8px;
+          display: flex;
+        }
+        .checkp2 {
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 13px;
+          color: var(--primary);
+          text-decoration: none;
+        }
+        .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+        .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+          color: var(--primary);
+        }
+      }
+      .smallDivp {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 16px;
+        color: rgb(255, 0, 0);
+        margin: 0 0 10px 0;
+      }
+    }
+  }
+  .btn1 {
+    width: 198px;
+    height: 59px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    box-shadow: 0px 0px 7px;
+    border-radius: 4px;
+    border: 0;
+    cursor: pointer;
+  }
+  .mainDivp1 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    color: #473d3d;
+  }
+  .mainimgDiv {
+    display: flex;
+    width: 150px;
+    justify-content: space-around;
+    .imgDiv {
+      width: 62px;
+      height: 50px;
+      background: #c54238;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .endimg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+}
+.SignBoxp {
+  width: 139px;
+  height: 30px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.SignBoxb1 {
+  width: 191px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 3px;
+  border: 0;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--primary);
+  cursor: pointer;
+}
+.SignBoxb2 {
+  width: 191px;
+  height: 48px;
+  background: var(--primary);
+  border-radius: 3px;
+  border: 0;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/*---------------------------- CSS CODE END FOR USER:SIGNUP PAGE-------------------------- */
+
+/*---------------------------- CSS CODE START FOR USER:TERMSCONDITIONS PAGE----------------- */
+/***********************************************************************************/
+.termDiv {
+  // width: 95%;
+  // margin: 0 auto;
+
+  .h6tag {
+    color: var(--primary);
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 0;
+  }
+  .ptag {
+    font-family: "Inter";
+    color: #000000;
+    font-style: normal;
+    font-size: 17px;
+    margin-top: 10px;
+  }
+}
+/*---------------------------- CSS CODE END FOR USER:TERMSCONDITIONS PAGE-------------------- */
+
+/*---------------------------- CSS CODE START FOR USER:HOME PAGE----------------- */
+/**********************************************************************************************/
+.Home {
+  .homed1 {
+    background-image: url("./assets/backgroundimg.jpg");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 12px 20px 0px rgb(0 0 0 / 25%);
+    height: 500px;
+    padding: 0 20px 0 20px;
+    .homed2 {
+      width: 95%;
+      margin: 0 auto;
+      margin-top: 20px;
+      .homed1h1 {
+        font-family: "Inter";
+        font-size: 40px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 1.2em;
+        margin-top: 0;
+        @media (max-width: 710px) {
+          font-size: 35px;
+        }
+        @media (max-width: 600px) {
+          font-size: 40px;
+        }
+        @media (max-width: 480px) {
+          font-size: 35px;
+        }
+      }
+    }
+    .homelandingimg {
+      width: 450px;
+      height: 320px;
+      border-radius: 50%;
+      @media (max-width: 915px) {
+        width: 350px;
+        height: 350px;
+      }
+      @media (max-width: 810px) {
+        width: 250px;
+        height: 250px;
+      }
+      @media (max-width: 710px) {
+        width: 200px;
+        height: 200px;
+      }
+      @media (max-width: 600px) {
+        display: none;
+      }
+    }
+  }
+  .homed3 {
+    padding: 10px;
+    margin-top: 20px;
+    .homed3h1 {
+      font-family: "Inter";
+      font-size: 30px;
+      font-weight: 700;
+      color: #000000;
+      @media (max-width: 400px) {
+        font-size: 25px;
+      }
+      @media (max-width: 340px) {
+        font-size: 22px;
+      }
+    }
+  }
+  .homed4 {
+    padding: 10px 10px 50px 10px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    box-shadow: 0px 0px 12px rgb(0 0 0 / 25%);
+    .homed4h1 {
+      font-family: "Inter";
+      font-size: 30px;
+      font-weight: 700;
+      color: #000000;
+    }
+    .homed4btn {
+      width: 200px;
+      height: 60px;
+      font-family: "Inter";
+      font-size: 20px;
+      color: #ffffff;
+      background: var(--primary);
+      border: none;
+      border-radius: 8px;
+      margin: 30px 0 0 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      @media (max-width: 480px) {
+        align-self: center;
+      }
+    }
+    .homed5 {
+      display: flex;
+      padding: 10px;
+      margin-top: 20px;
+      @media (max-width: 350px) {
+        flex-direction: column;
+      }
+      .homed5pic {
+        color: var(--primary);
+        font-size: 5rem;
+        @media (max-width: 350px) {
+          align-self: center;
+        }
+      }
+      .homed6 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-left: 25px;
+        @media (max-width: 350px) {
+          align-items: center;
+        }
+        .homed6h1 {
+          font-family: "Inter";
+          font-size: 20px;
+          font-weight: 600;
+          color: #000000;
+          margin: 10px 0 0 0;
+        }
+        .homed6p1 {
+          font-family: "Inter";
+          font-size: 20px;
+          color: rgb(132, 132, 132);
+          margin: 0;
+          @media (max-width: 350px) {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+/*---------------------------- CSS CODE END FOR USER:HOME PAGE----------------------------- */
+
+/*---------------------------- CSS CODE END FOR Home:cryptotable COMPONENT-------------------- */
+.cryptotable {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  .tablecontainer {
+    border: 1.5px solid var(--secondary);
+    box-shadow: none !important;
+    @media (max-width: 650px) {
+      overflow-x: auto !important;
+    }
+    .headingrow {
+      background: var(--primary);
+    }
+    .tableheadings {
+      font-family: "Inter" !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+      text-align: center;
+    }
+    .tablerowcell {
+      border: 0 !important;
+      text-align: center;
+    }
+    .coinlogodiv {
+      display: flex;
+      align-items: center;
+      .coinlogo {
+        margin-right: 10px;
+        width: 35px;
+        height: 35px;
+      }
+      .coinlogop {
+        font-family: "Inter" !important;
+        font-weight: 500 !important;
+        text-align: start;
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+/*---------------------------- CSS CODE START FOR USER:cryptotable COMPONENT----------------- */
+/**********************************************************************************************/
+
+/*---------------------------- CSS CODE START FOR USER:IndividualCrypto PAGE----------------- */
+/**********************************************************************************************/
+.individualcrypto {
+  display: flex;
+  flex-direction: column;
+  padding: 70px 20px 20px 20px;
+  .individualcryptos1 {
+    display: flex;
+    align-items: center;
+    .individualcryptopic {
+      width: 60px;
+      height: 60px;
+      @media (max-width: 650px) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    .individualcryptoh1 {
+      font-family: "Inter";
+      font-size: 35px;
+      font-weight: 600;
+      margin-left: 15px;
+      @media (max-width: 650px) {
+        font-size: 30px;
+      }
+    }
+    .individualcryptoh2 {
+      font-family: "Inter";
+      font-size: 35px;
+      font-weight: 500;
+      margin-left: 20px;
+      @media (max-width: 650px) {
+        font-size: 30px;
+      }
+    }
+    .individualcryptop1 {
+      font-family: "Inter";
+      font-size: 25px;
+      font-weight: 600;
+      margin-left: 15px;
+      color: #ff0000;
+      @media (max-width: 650px) {
+        font-size: 20px;
+      }
+    }
+  }
+  .individualcryptograph {
+    width: 900px;
+    max-width: 900px;
+    height: 600px;
+    margin-right: 20px;
+
+    @media (max-width: 1160px) {
+      max-width: none;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+    @media (max-width: 768px) {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+    .individualcryptographs1 {
+      display: flex;
+      margin: 0 0 0 40px;
+      .individualcryptographp {
+        font-family: "Inter";
+        font-size: 17px;
+        font-weight: 600;
+        color: darkgray;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+  .individualcryptod1 {
+    display: flex;
+    @media (max-width: 1160px) {
+      flex-direction: column;
+    }
+    .individualcryptod2 {
+      display: flex;
+      flex-direction: column;
+    }
+    .individualcryptod3 {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      @media (max-width: 1160px) {
+        margin: 30px 0 50px 0;
+        flex-direction: row;
+      }
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
+      .individualcryptod3con {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        @media (max-width: 1160px) {
+          width: 70%;
+        }
+        @media (max-width: 480px) {
+          width: 100%;
+        }
+      }
+      .individualcryptod3h1 {
+        font-family: "Inter";
+        font-size: 25px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+      .input-field {
+        width: 90%;
+        height: 50px;
+        border-radius: 8px;
+        background: #ebeaea83;
+        border: 0px;
+        font-size: 20px;
+        font-family: "Inter";
+        align-self: center;
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          font-size: 17px;
+        }
+        padding-left: 15px;
+      }
+      .input-field:focus {
+        outline: none;
+      }
+      ::placeholder {
+        font-family: "Inter";
+        font-weight: 400;
+        font-size: 20px;
+        color: #937a7a;
+        //   padding-left: 30px;
+        @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+          font-size: 17px;
+        }
+      }
+      .individualcryptod3icon {
+        font-size: 2rem;
+        color: #00b4ff;
+        align-self: center;
+        margin: 15px 0 15px 0;
+      }
+      .individualcryptod3btn {
+        font-family: "Inter";
+        font-size: 20px;
+        font-weight: 500;
+        width: 94%;
+        height: 50px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--primary);
+        color: #ffffff;
+        align-self: center;
+        margin-top: 30px;
+        cursor: pointer;
+      }
+      .individualcryptod3d1 {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        border: 1px solid var(--primary);
+        border-radius: 8px;
+        padding: 20px;
+        @media (max-width: 1160px) {
+          width: 30%;
+        }
+        @media (max-width: 768px) {
+          width: 62%;
+        }
+        @media (max-width: 480px) {
+          width: auto;
+        }
+        .individualcryptod3h2 {
+          font-family: "Inter";
+          font-size: 23px;
+          font-weight: 600;
+          margin-top: 0;
+        }
+      }
+      .othercrypto {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        .othercryptos1 {
+          display: flex;
+          align-items: center;
+
+          .othercryptos1pic {
+            width: 30px;
+            height: 30px;
+            margin-right: 7px;
+          }
+          .othercryptos1p1 {
+            font-family: "Inter";
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0;
+            color: rgb(129, 129, 129);
+          }
+        }
+        .othercryptos2 {
+          display: flex;
+          flex-direction: column;
+          .othercryptos2p1 {
+            font-family: "Inter";
+            font-size: 15px;
+            font-weight: 500;
+            margin: 0;
+          }
+          .othercryptos2p2 {
+            font-family: "Inter";
+            font-size: 15px;
+            font-weight: 500;
+            margin: 5px 0 0 0;
+          }
+        }
+      }
+    }
+  }
+  .individualcryptoh3 {
+    font-family: "Inter";
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0 0 0 10px;
+  }
+  .individualcryptop2 {
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 400;
+    margin: 10px 0 0 10px;
+    color: rgb(121, 119, 119);
+    max-width: 910px;
+    line-height: 1.5;
+  }
+  .individualcryptoh4 {
+    font-family: "Inter";
+    font-size: 30px;
+    font-weight: 600;
+    margin: 50px 0 0 10px;
+  }
+  .individualcryptop3 {
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 400;
+    margin: 20px 0 0 10px;
+    color: rgb(121, 119, 119);
+    max-width: 910px;
+    line-height: 1.5;
+  }
+}
+.confirmbox {
+  @media (max-width: 768px) {
+    width: 90% !important;
+    max-width: auto !important;
+  }
+
+  @media (max-width: 400px) {
+    width: 85% !important;
+    max-width: auto !important;
+  }
+  .confirmboxp1 {
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 600;
+    align-self: center;
+    margin: 5px 0 20px 0;
+    color: var(--primary);
+  }
+  .confirmboxd1 {
+    padding: 10px;
+    width: 175px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    background-color: #ebeaea83;
+    border-radius: 16px;
+    .confirmboxd1pic {
+      width: 35px;
+      height: 35px;
+    }
+    .confirmboxd1p1 {
+      font-family: "Inter";
+      font-size: 20px;
+      font-weight: 500;
+      align-self: center;
+      margin: 0 0 0 10px;
+    }
+  }
+  .individualcryptod3icon {
+    font-size: 2rem;
+    color: #00b4ff;
+    align-self: center;
+    margin: 15px 0 15px 0;
+  }
+  .confirmboxconfirmbtn {
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 500;
+    width: 200px;
+    height: 50px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #ffffff;
+    align-self: flex-end;
+    margin: 30px 10px 0 0;
+    cursor: pointer;
+    @media (max-width: 468px) {
+      align-self: center;
+    }
+  }
+}
+/*---------------------------- CSS CODE END FOR USER:IndividualCrypto PAGE-------------------- */
