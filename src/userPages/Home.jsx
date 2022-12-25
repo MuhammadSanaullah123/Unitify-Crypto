@@ -25,10 +25,10 @@ const Home = () => {
           <div className="homed2">
             <h1 className="homed1h1">
               Now trade <br />
-              and buy your crypto currency.
+              and buy crypto currency.
             </h1>
             <h1 className="homed1h1">
-              See the future, <br /> with our crypto currency predictor.
+              See the future <br /> with our crypto currency predictor.
             </h1>
 
             <br />

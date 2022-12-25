@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 //components
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -8,7 +8,10 @@ import Footer from "../components/Footer/Footer";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 //other
 import {
   Chart as ChartJS,
@@ -43,6 +46,15 @@ const IndividualCrypto = () => {
     unity: "",
   });
   const [open, setOpen] = useState(false);
+  const [crypto1, setCrypto1] = useState("");
+  const [crypto2, setCrypto2] = useState("");
+
+  const handleChange1 = (event) => {
+    setCrypto1(event.target.value);
+  };
+  const handleChange2 = (event) => {
+    setCrypto2(event.target.value);
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -165,23 +177,25 @@ const IndividualCrypto = () => {
 
   const OtherCrypto = ({ name, price, change }) => {
     return (
-      <div className="othercrypto">
-        <span className="othercryptos1">
-          <img className="othercryptos1pic" src={btc} alt="" />
-          <p className="othercryptos1p1">{name}</p>
-        </span>
-        <span className="othercryptos2">
-          <p className="othercryptos2p1">{price}</p>
-          <p
-            style={{
-              color: `${change.slice(0, 1) === "-" ? "red" : "green"}`,
-            }}
-            className="othercryptos2p2"
-          >
-            {change}
-          </p>
-        </span>
-      </div>
+      <Link to="/individualcrypto" style={{ textDecoration: "none" }}>
+        <div className="othercrypto">
+          <span className="othercryptos1">
+            <img className="othercryptos1pic" src={btc} alt="" />
+            <p className="othercryptos1p1">{name}</p>
+          </span>
+          <span className="othercryptos2">
+            <p className="othercryptos2p1">{price}</p>
+            <p
+              style={{
+                color: `${change.slice(0, 1) === "-" ? "red" : "green"}`,
+              }}
+              className="othercryptos2p2"
+            >
+              {change}
+            </p>
+          </span>
+        </div>
+      </Link>
     );
   };
 
@@ -242,19 +256,47 @@ const IndividualCrypto = () => {
           <div className="individualcryptod3">
             <div className="individualcryptod3con">
               <h1 className="individualcryptod3h1">Conversion</h1>
+
+              <FormControl className="individualcryptodropdown" fullWidth>
+                <InputLabel id="demo-simple-select-label">Select</InputLabel>
+                <Select
+                  value={crypto1}
+                  label="Crypto1"
+                  onChange={handleChange1}
+                >
+                  <MenuItem value="BTC">BTC</MenuItem>
+                  <MenuItem value="BNB">BNB</MenuItem>
+                  <MenuItem value="Ethereum">Ethereum</MenuItem>
+                  <MenuItem value="Dogecoin">Dogecoin</MenuItem>
+                </Select>
+              </FormControl>
               <input
                 className="input-field"
                 type="text"
-                placeholder="BTC"
+                placeholder="Amount"
                 name="currentcoin"
                 value={values.currentcoin}
                 onChange={handleInput}
               />
               <ArrowCircleDownIcon className="individualcryptod3icon" />
+
+              <FormControl className="individualcryptodropdown" fullWidth>
+                <InputLabel id="demo-simple-select-label">Select</InputLabel>
+                <Select
+                  value={crypto2}
+                  label="Crypto2"
+                  onChange={handleChange2}
+                >
+                  <MenuItem value="BTC">BTC</MenuItem>
+                  <MenuItem value="BNB">BNB</MenuItem>
+                  <MenuItem value="Ethereum">Ethereum</MenuItem>
+                  <MenuItem value="Dogecoin">Dogecoin</MenuItem>
+                </Select>
+              </FormControl>
               <input
                 className="input-field"
                 type="text"
-                placeholder="Unity"
+                placeholder="Amount"
                 name="unity"
                 value={values.unity}
                 onChange={handleInput}
@@ -273,12 +315,16 @@ const IndividualCrypto = () => {
 
                   <div className="confirmboxd1">
                     <img className="confirmboxd1pic" src={btc} alt="" />
-                    <p className="confirmboxd1p1">{values.currentcoin} BTC</p>
+                    <p className="confirmboxd1p1">
+                      {values.currentcoin} {crypto1}
+                    </p>
                   </div>
                   <ArrowCircleDownIcon className="individualcryptod3icon" />
                   <div className="confirmboxd1">
                     <img className="confirmboxd1pic" src={btc} alt="" />
-                    <p className="confirmboxd1p1">{values.unity} Unity</p>
+                    <p className="confirmboxd1p1">
+                      {values.unity} {crypto2}
+                    </p>
                   </div>
                   <button className="confirmboxconfirmbtn">Confirm</button>
                 </Box>

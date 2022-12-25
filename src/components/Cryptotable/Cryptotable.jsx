@@ -127,6 +127,7 @@ const Cryptotable = () => {
             <TableBody>
               {rows.map((row, index) => (
                 <TableRow
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     navigate("/individualcrypto");
                   }}

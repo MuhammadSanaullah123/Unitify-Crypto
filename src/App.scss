@@ -864,9 +864,20 @@
         flex-direction: column;
         @media (max-width: 1160px) {
           width: 70%;
+          margin-right: 20px;
         }
         @media (max-width: 480px) {
           width: 100%;
+        }
+        .individualcryptodropdown {
+          width: 93%;
+          align-self: center;
+          margin-bottom: 15px;
+          .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root,
+          .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+            font-family: "Inter";
+            font-size: 17px;
+          }
         }
       }
       .individualcryptod3h1 {
@@ -1037,7 +1048,7 @@
   }
   .confirmboxd1 {
     padding: 10px;
-    width: 175px;
+    width: 200px;
     display: flex;
     align-items: center;
     align-self: center;

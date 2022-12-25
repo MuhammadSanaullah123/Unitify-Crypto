@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
 //assets
@@ -188,11 +188,15 @@ const Navbar = () => {
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static">
             <Toolbar>
-              <img
-                style={{ width: "120px", height: "40px" }}
-                src={logo}
-                alt=""
-              />
+              <Link to="/home">
+                {" "}
+                <img
+                  style={{ width: "120px", height: "40px" }}
+                  src={logo}
+                  alt=""
+                />
+              </Link>
+
               <Search>
                 <SearchIconWrapper>
                   <SearchIcon className="navicons" />
