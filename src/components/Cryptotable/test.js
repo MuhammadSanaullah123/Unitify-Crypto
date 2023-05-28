@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useState, useEffect } from "react";
-//components
 
+//components
 import Linegraph from "../Linegraph/Linegraph";
 
 //assets
@@ -17,33 +15,31 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
-//polygon = matic
-//cardano = ada
-//polkadot = dot
-let cryptoList = ['bitcoin','ethereum','solana','polygon','cardano','polkadot']
-function createData(url, name, lastprice, change, marketcap) {
-  return { url, name, lastprice, change, marketcap };
+import axios from "axios";
+import { useState } from "react";
+import { MyContext } from "../../contexts/myContext";
+function createData(name, lastprice, change, Prediction, marketcap) {
+  return { name, lastprice, change, Prediction, marketcap };
 }
 
 let rows = [
   createData(
-    "ada",
     <div className="coinlogodiv">
       <img className="coinlogo" src={btc} alt="" />
-      <p className="coinlogop">Cardano</p>
-      {
-        <Linegraph
-        />
-      }
+      <p className="coinlogop">BNB</p>
+      <Linegraph
+        dataProp={Array.from(
+          { length: 12 },
+          () => Math.floor(Math.random() * 100) + 1
+        )}
+      />
     </div>,
-    "$0.39",
-    "+1.74%",
-
-    "13,763,420,500"
+    159,
+    6.0,
+    24,
+    4.0
   ),
   createData(
-    "btc",
     <div className="coinlogodiv">
       <img className="coinlogo" src={btc} alt="" />
       <p className="coinlogop">Bitcoin (BTC)</p>
@@ -54,12 +50,12 @@ let rows = [
         )}
       />
     </div>,
-    "$29,589.46",
-    "+2.79%",
-    "573,001,848,764"
+    237,
+    9.0,
+    37,
+    4.3
   ),
   createData(
-    "eth",
     <div className="coinlogodiv">
       <img className="coinlogo" src={btc} alt="" />
       <p className="coinlogop">Ethereum (ETH)</p>
@@ -70,15 +66,15 @@ let rows = [
         )}
       />
     </div>,
-    "$1,992.31",
-    "+6.38%",
-    "239,814,419,688"
+    262,
+    16.0,
+    24,
+    6.0
   ),
   createData(
-    "dot",
     <div className="coinlogodiv">
       <img className="coinlogo" src={btc} alt="" />
-      <p className="coinlogop">Polkadot</p>
+      <p className="coinlogop">Galxe (GAL)</p>
       <Linegraph
         dataProp={Array.from(
           { length: 12 },
@@ -86,15 +82,15 @@ let rows = [
         )}
       />
     </div>,
-    "$5.87",
-    "+3.94%",
-    "$6,932,103,369"
+    305,
+    3.7,
+    67,
+    4.3
   ),
   createData(
-    "matic",
     <div className="coinlogodiv">
       <img className="coinlogo" src={btc} alt="" />
-      <p className="coinlogop">Matic</p>
+      <p className="coinlogop">Green Metaverse Token (GMT)</p>
       <Linegraph
         dataProp={Array.from(
           { length: 12 },
@@ -102,30 +98,15 @@ let rows = [
         )}
       />
     </div>,
-    "$1.00",
-    "+2.02%",
-    "9,126,514,666"
-  ),
-  createData(
-    "sol",
-    <div className="coinlogodiv">
-      <img className="coinlogo" src={btc} alt="" />
-      <p className="coinlogop">Solana</p>
-      <Linegraph
-        dataProp={Array.from(
-          { length: 12 },
-          () => Math.floor(Math.random() * 100) + 1
-        )}
-      />
-    </div>,
-    "$22.93",
-    "+5.78%",
-    "9,041,087,645"
+    356,
+    16.0,
+    49,
+    3.9
   ),
 ];
 
 const Cryptotable = () => {
-     const updateData = async (rows) => {
+  const updateData = async (rows) => {
     const server = axios.create({
       baseURL: "https://api.coincap.io/v2/",
       headers: {
@@ -138,59 +119,62 @@ const Cryptotable = () => {
       redirect: "follow",
     };
 
-  
+    const response = await server.get(
+      "https://api.coincap.io/v2/assets?limit=5",
+      requestOptions
+    );
 
-    let response = await Promise.all(
-       cryptoList.map((id,counter)=>{
-        return server.get(`https://api.coincap.io/v2/assets/${id}`,requestOptions)
-      })
-    )
+    let responses = await Promise.all([
+      server.get(
+        `https://api.coincap.io/v2/assets/${response.data.data[0].id}/history?interval=d1`
+      ),
+      server.get(
+        `https://api.coincap.io/v2/assets/${response.data.data[1].id}/history?interval=d1`
+      ),
+      server.get(
+        `https://api.coincap.io/v2/assets/${response.data.data[2].id}/history?interval=d1`
+      ),
+      server.get(
+        `https://api.coincap.io/v2/assets/${response.data.data[3].id}/history?interval=d1`
+      ),
+      server.get(
+        `https://api.coincap.io/v2/assets/${response.data.data[4].id}/history?interval=d1`
+      ),
+    ]);
 
+    console.log("responses", responses[1].data.data.slice(0, 12));
+    rows = await rows.map((index, value) => {
+      return createData(
+        (rows[value].name = (
+          <div className="coinlogodiv">
+            <img className="coinlogo" src={btc} alt="" />
+            <p className="coinlogop">{response.data.data[value].name}</p>
+            <Linegraph dataProp={responses[value].data.data.slice(0, 12)} />
+          </div>
+        )),
+        parseFloat(response.data.data[value].priceUsd).toFixed(2),
+        parseFloat(response.data.data[value].changePercent24Hr).toFixed(2),
+        1,
+        parseFloat(response.data.data[value].marketCapUsd).toFixed(2)
+      );
+    });
 
-   
-    
-    return response;
+    return rows;
   };
- 
-  const updatefunction =()=>{
-    updateData(data)
-    .then((response) => {
-      rows =  rows.map((index, value) => {
-        return createData(
-          response[value].data.data.id,
-            <div className="coinlogodiv">
-              <img className="coinlogo" src={btc} alt="" />
-              <p className="coinlogop" >{response[value].data.data.name}</p>
-             
-              <Linegraph
-      
-          />
-            </div>
-        ,
-          parseFloat(response[value].data.data.priceUsd).toFixed(2),
-          parseFloat(response[value].data.data.changePercent24Hr).toFixed(2),
-          parseFloat(response[value].data.data.marketCapUsd).toFixed(2)
-        );
-      });
-      return rows
-    })
-    .then((row) => {
-      setData(row)
-      console.log(Date())
-    })
 
-  }
   const [data, setData] = useState(rows);
   const navigate = useNavigate();
 
-   useEffect(() => {
-    updatefunction()
-   const interval = setInterval(() => {
-
-    updatefunction()
-   }, 30000) 
-   return() => clearInterval(interval)
-  },[]); 
+  useEffect(() => {
+    updateData(data)
+      .then((rows) => {
+        console.log("I am here", rows);
+        setData(rows);
+      })
+      .then(() => {
+        localStorage.setItem("data", data);
+      });
+  }, []);
 
   return (
     <>
@@ -205,10 +189,9 @@ const Cryptotable = () => {
                 >
                   Name
                 </TableCell>
-                
                 <TableCell className="tableheadings">Last Price</TableCell>
                 <TableCell className="tableheadings">24h Change</TableCell>
-
+                <TableCell className="tableheadings">Prediction</TableCell>
                 <TableCell className="tableheadings">Market Cap</TableCell>
               </TableRow>
             </TableHead>
@@ -217,7 +200,7 @@ const Cryptotable = () => {
                 <TableRow
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    navigate(`/individualcrypto/${row.url}`,{state:row.url} );
+                    navigate("/individualcrypto", { state: { index } });
                   }}
                 >
                   <TableCell
@@ -231,7 +214,9 @@ const Cryptotable = () => {
                     {row.lastprice}
                   </TableCell>
                   <TableCell className="tablerowcell">{row.change}</TableCell>
-
+                  <TableCell className="tablerowcell">
+                    {row.Prediction}
+                  </TableCell>
                   <TableCell className="tablerowcell">
                     {row.marketcap}
                   </TableCell>

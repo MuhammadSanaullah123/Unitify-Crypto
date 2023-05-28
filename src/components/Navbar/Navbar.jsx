@@ -4,7 +4,9 @@ import "./Navbar.scss";
 
 //assets
 import logo from "../../assets/logo.png";
-
+//metamask
+import { ethers } from "ethers";
+import { Nav, Button, Container } from "react-bootstrap";
 //mui
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -176,7 +178,69 @@ const Navbar = () => {
       );
     }
   }, []);
+  //----------------------------------------MetaMask Connect
+  // MetaMask Login/Connect
+  const [account, setAccount] = useState(null);
+  const [data, setdata] = useState({
+    address: "", // Stores address
+    Balance: null, // Stores balance
+  });
+  const ownhandler = () => {
+    if (window.ethereum) {
+      window.ethereum.request({ method: "eth_requestAccounts" }).then((res) => {
+        // Return the address of the wallet
+        console.log(res);
+      });
+    } else {
+      alert("install metamask extension!!");
+    }
+    window.ethereum
+      .request({
+        method: "eth_getBalance",
+        params: [data.address, "latest"],
+      })
+      .then((balance) => {
+        // Return string value to convert it into int balance
+        console.log(balance);
 
+        // Yarn add ethers for using ethers utils or
+        // npm install ethers
+        console.log(ethers.utils.formatEther(balance));
+        // Format the string into main latest balance
+      });
+  };
+  const web3Handler = async () => {
+    /*  window.ethereum
+      .request({ method: "eth_requestAccounts" })
+      .then(() => {
+        // User has authorized the connection
+        // You can now interact with their wallet
+      })
+      .catch((err) => {
+        // User has rejected the connection request
+        console.error(err);
+      }); */
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setAccount(accounts[0]);
+    // Get provider from Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Set signer
+    const signer = provider.getSigner();
+
+    window.ethereum.on("chainChanged", (chainId) => {
+      window.location.reload();
+    });
+
+    window.ethereum.on("accountsChanged", async function (accounts) {
+      setAccount(accounts[0]);
+      await web3Handler();
+    });
+    // loadContracts(signer);
+  };
+
+  //----------------------------------------MetaMask Connect
   return (
     <>
       <div
@@ -206,6 +270,20 @@ const Navbar = () => {
                   inputProps={{ "aria-label": "search" }}
                 />
               </Search>
+              <div className="otherlinks">
+                <Link
+                  onClick={() => window.open("http://3.108.247.218")}
+                  className="otherlinksa1"
+                >
+                  E-Commerce
+                </Link>
+                <Link
+                  onClick={() => window.open("https://unitifynft.netlify.app/")}
+                  className="otherlinksa1"
+                >
+                  NFTs
+                </Link>
+              </div>
               <Box sx={{ flexGrow: 1 }} />
 
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -223,17 +301,39 @@ const Navbar = () => {
                     sx={{ fontSize: "30px", marginRight: "10px" }}
                   />
                 </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="show 17 new notifications"
-                  color="inherit"
-                >
-                  <AccountBalanceWalletIcon
-                    className="navicons"
-                    sx={{ fontSize: "30px" }}
-                  />
-                </IconButton>
 
+                <Nav>
+                  {account ? (
+                    <Nav.Link
+                      href={`https://etherscan.io/address/${account}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="button nav-button btn-sm mx-4"
+                    >
+                      <Button
+                        className="navbarwalletaddressbtn"
+                        variant="outline-light"
+                      >
+                        {account.slice(0, 5) + "..." + account.slice(38, 42)}
+                      </Button>
+                    </Nav.Link>
+                  ) : (
+                    /*   <Button onClick={web3Handler} variant="outline-light">
+                      Connect Wallet
+                    </Button> */
+                    <IconButton
+                      size="large"
+                      aria-label="show 17 new notifications"
+                      color="inherit"
+                      onClick={web3Handler}
+                    >
+                      <AccountBalanceWalletIcon
+                        className="navicons"
+                        sx={{ fontSize: "30px" }}
+                      />
+                    </IconButton>
+                  )}
+                </Nav>
                 <IconButton
                   size="large"
                   aria-label="show 4 new mails"

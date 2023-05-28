@@ -11,6 +11,8 @@ import SignUp from "./userPages/SignUp";
 import TermConditions from "./userPages/TermsConditions";
 import Home from "./userPages/Home";
 import IndividualCrypto from "./userPages/IndividualCrypto";
+import IndividualProject from "./userPages/IndividualProject";
+import FundProject from "./userPages/FundProject";
 const App = () => {
   return (
     <>
@@ -23,9 +25,15 @@ const App = () => {
           <Route exact path="/home" element={<Home />} />
           <Route
             exact
-            path="/individualcrypto"
+            path="/individualcrypto/:cryptoname"
             element={<IndividualCrypto />}
           />
+          <Route
+            exact
+            path="/individualproject"
+            element={<IndividualProject />}
+          />
+          <Route exact path="/fundproject/:id" element={<FundProject />} />
         </Routes>
       </Router>
     </>

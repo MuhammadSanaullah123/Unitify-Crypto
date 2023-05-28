@@ -521,7 +521,7 @@
   height: 48px;
   background: #ffffff;
   border-radius: 3px;
-  border: 0;
+  border: 1px solid var(--primary);
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
@@ -572,6 +572,8 @@
 /*---------------------------- CSS CODE START FOR USER:HOME PAGE----------------- */
 /**********************************************************************************************/
 .Home {
+  display: flex;
+  flex-direction: column;
   .homed1 {
     background-image: url("./assets/backgroundimg.jpg");
     display: flex;
@@ -626,17 +628,56 @@
   .homed3 {
     padding: 10px;
     margin-top: 20px;
+    .homes1 {
+      display: flex;
+    }
     .homed3h1 {
       font-family: "Inter";
       font-size: 30px;
       font-weight: 700;
       color: #000000;
+      cursor: pointer;
       @media (max-width: 400px) {
         font-size: 25px;
       }
       @media (max-width: 340px) {
         font-size: 22px;
       }
+    }
+    .homed3h1Selected {
+      font-family: "Inter";
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+      @media (max-width: 400px) {
+        font-size: 25px;
+      }
+      @media (max-width: 340px) {
+        font-size: 22px;
+      }
+    }
+  }
+  .homeprojectbtn {
+    width: 180px;
+    height: 50px;
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    background: var(--primary);
+    border: none;
+    border-radius: 8px;
+    margin: 30px 0 0 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    margin-right: 10px;
+    cursor: pointer;
+    @media (max-width: 480px) {
+      align-self: center;
     }
   }
   .homed4 {
@@ -651,12 +692,14 @@
       font-size: 30px;
       font-weight: 700;
       color: #000000;
+      margin-left: 10px;
     }
     .homed4btn {
       width: 200px;
       height: 60px;
       font-family: "Inter";
       font-size: 20px;
+      font-weight: 500;
       color: #ffffff;
       background: var(--primary);
       border: none;
@@ -840,6 +883,7 @@
   }
   .individualcryptod1 {
     display: flex;
+    margin-bottom: 450px;
     @media (max-width: 1160px) {
       flex-direction: column;
     }
@@ -996,6 +1040,15 @@
         }
       }
     }
+    .individualcryptoh1 {
+      font-family: "Inter";
+      font-size: 35px;
+      font-weight: 600;
+      margin-left: 15px;
+      @media (max-width: 650px) {
+        font-size: 30px;
+      }
+    }
   }
   .individualcryptoh3 {
     font-family: "Inter";
@@ -1091,3 +1144,131 @@
   }
 }
 /*---------------------------- CSS CODE END FOR USER:IndividualCrypto PAGE-------------------- */
+
+/*---------------------------- CSS CODE START FOR USER:IndividualProject PAGE----------------- */
+/**********************************************************************************************/
+.IndividualProject {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  .individualprojects1 {
+    display: flex;
+    align-items: center;
+    .individualprojectpic {
+      color: var(--primary);
+      width: 30px;
+      height: 30px;
+      @media (max-width: 650px) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .individualprojecth1 {
+    font-family: "Inter";
+    font-size: 25px;
+    font-weight: 600;
+    margin-left: 15px;
+    @media (max-width: 650px) {
+      font-size: 30px;
+    }
+  }
+  .individualprojecth3 {
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 0 10px;
+  }
+  .individualprojecth4 {
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 600;
+    margin: 50px 0 0 10px;
+  }
+  .input-field {
+    width: 300px;
+    height: 50px;
+    border-radius: 8px;
+    background: #ebeaea83;
+    border: 0px;
+    font-size: 20px;
+    font-family: "Inter";
+    margin: 20px 0 10px 10px;
+    @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+      font-size: 17px;
+    }
+    padding-left: 15px;
+  }
+  .input-field:focus {
+    outline: none;
+  }
+  ::placeholder {
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 15px;
+    color: #937a7a;
+    //   padding-left: 30px;
+    @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+      font-size: 17px;
+    }
+  }
+  .textarea-field {
+    width: 90%;
+    height: 150px;
+    border-radius: 8px;
+    background: #ebeaea83;
+    border: 0px;
+    font-size: 20px;
+    font-family: "Inter";
+    margin: 20px 0 10px 10px;
+    padding-top: 10px;
+    resize: none;
+    @media only screen and (max-width: 1400px) and (min-width: 1000px) {
+      font-size: 17px;
+    }
+    padding-left: 15px;
+  }
+  .individualprojectimg {
+    border: 3px solid var(--primary);
+  }
+  .individualprojectb1 {
+    width: 150px;
+    height: 40px;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 17px;
+    align-self: flex-end;
+    margin: 15px 20px 0 0;
+    cursor: pointer;
+  }
+  .individualprojectimgbtn {
+    display: flex;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    background: none;
+    color: var(--primary);
+    border-radius: 6px;
+    border: 2px solid var(--primary);
+    margin: 15px 0 0 15px;
+    cursor: pointer;
+  }
+  .individualprojectp1 {
+    font-family: "Inter";
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 5px;
+  }
+
+  .circularbar {
+    width: 80px !important;
+    height: 80px !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+}
+/*---------------------------- CSS CODE END FOR USER:IndividualProject PAGE-------------------- */

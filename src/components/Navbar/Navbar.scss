@@ -33,7 +33,36 @@
       margin-left: 15px;
     }
   }
+  .nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .otherlinks {
+    display: flex;
+    justify-content: space-between;
+    width: 190px;
+    margin-left: 30px;
+    .otherlinksa1 {
+      color: var(--primary);
+
+      font-family: "Inter";
+      font-size: 18px;
+      font-weight: 600;
+      text-underline-offset: 5px;
+    }
+  }
 }
 .navicons {
   color: var(--primary);
+}
+.navbarwalletaddressbtn {
+  font-family: "Inter";
+  font-weight: 600;
+  width: 100px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  background-color: var(--primary);
 }

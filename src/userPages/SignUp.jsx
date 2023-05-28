@@ -49,7 +49,7 @@ const SignUp = () => {
     transform: "translate(-50%, -50%)",
     width: "526px",
     height: "158px",
-    background: "#e94b41",
+    background: "#fff",
     borderRadius: "6px",
     paddingLeft: "15px",
     display: "flex",
@@ -181,8 +181,12 @@ const SignUp = () => {
                   alignSelf: "center",
                 }}
               >
-                <button className="SignBoxb1">Admin</button>
-                <button className="SignBoxb2">User</button>
+                <Link to="/login">
+                  <button className="SignBoxb1">Admin</button>
+                </Link>
+                <Link to="/login">
+                  <button className="SignBoxb2">User</button>
+                </Link>
               </div>
             </Box>
           </Modal>

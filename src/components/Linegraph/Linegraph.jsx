@@ -21,6 +21,29 @@ ChartJS.register(
   Legend
 );
 
+
+function createDataArray(length) {
+  var data = [];
+  
+  // Generate JSON objects with random price and date
+  for (var i = 0; i < length; i++) {
+    var price = Math.random() * (100 - 1) + 1; // Random price between 1 and 100 USD
+    var date = new Date(+(new Date()) - Math.floor(Math.random() * 10000000000)); // Random date within the last 10000 days
+
+    data.push({
+      "priceUsd": price.toFixed(2),
+      "date": date.toISOString().split('T')[0]
+    });
+  }
+  
+  // Sort the array by date in ascending order
+  data.sort(function(a, b) {
+    return new Date(a.date) - new Date(b.date);
+  });
+  
+  return data;
+}
+
 const Linegraph = ({ dataProp }) => {
   const options = {
     scales: {
@@ -44,26 +67,16 @@ const Linegraph = ({ dataProp }) => {
     pointRadius: 0,
   };
 
+  if(!dataProp){
+    dataProp = createDataArray(12)
+  }
   const data = {
-    labels: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
+    labels: dataProp.map((obj) => obj.date),
 
     datasets: [
       {
         label: "Dataset 1",
-        data: dataProp,
+        data: dataProp.map((obj) => obj.priceUsd),
         borderColor: "#00b4ff",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },

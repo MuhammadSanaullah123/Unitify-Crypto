@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 //components
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -39,7 +40,16 @@ ChartJS.register(
 );
 
 const IndividualCrypto = () => {
-  const [view, setView] = useState("month");
+  const location = useLocation();
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const { cryptoname } = params;
+  const [coinname, setCoinName] = useState();
+
+  const [coindata, setCoinData] = useState([]);
+
+  const [view, setView] = useState("day");
   const [dates] = useState([]);
   const [values, setValues] = useState({
     currentcoin: "",
@@ -49,6 +59,185 @@ const IndividualCrypto = () => {
   const [crypto1, setCrypto1] = useState("");
   const [crypto2, setCrypto2] = useState("");
 
+  const [pData, setPData] = useState([
+    20, 30, 40, 25, 15, 16, 20, 60, 10, 20, 30, 40, 25, 15, 16, 20, 60, 10, 20,
+    30, 40, 25, 15, 70, 100, 45, 17, 50, 23, 70, 100, 25,
+  ]);
+  const [currentbtcprice, setcurrentbtcprice] = useState();
+
+  const [cryptopercsnatgechange, setPercenatgechange] = useState();
+
+  const [cryptoName, setCryptoName] = useState();
+  const [cryptonameurl, setCryptoNameUrl] = useState();
+
+  const [moreCrypto, setMoreCrypto] = useState([]);
+
+  const [datalabel, setDatalabel] = useState([
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ]);
+
+  //graph2
+  const dummydata = {
+    labels: view === "day" ? datalabel : "",
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: pData,
+        borderColor: "#00b4ff",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
+
+  const updateData = async (crypto) => {
+    const server = axios.create({
+      baseURL: "https://api.coincap.io/v2/",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    const response = await server.get(
+      `https://api.coincap.io/v2/assets/${crypto}`,
+      requestOptions
+    );
+    console.log("RESPONSE");
+
+    console.log(response);
+    let responses = await server.get(
+      `https://api.coincap.io/v2/assets/${
+        response.data.data.id
+      }/history?interval=d1&start=${
+        Date.now() - 32 * 24 * 60 * 60 * 1000
+      }&end=${Date.now()}`
+    );
+
+    let cryptoList = [
+      "bitcoin",
+      "ethereum",
+      "solana",
+      "polygon",
+      "cardano",
+      "polkadot",
+    ];
+    let extraDataResponse = await Promise.all(
+      cryptoList.map((id, counter) => {
+        return server.get(
+          `https://api.coincap.io/v2/assets/${id}`,
+          requestOptions
+        );
+      })
+    );
+    return [responses.data.data, extraDataResponse, response.data.data];
+  };
+  useEffect(() => {
+    if (cryptoname === "ethereum") {
+      setCryptoNameUrl("eth");
+    }
+    if (cryptoname === "bitcoin") {
+      setCryptoNameUrl("btc");
+    }
+    if (cryptoname === "cardano") {
+      setCryptoNameUrl("ada");
+    }
+    if (cryptoname === "polkadot") {
+      setCryptoNameUrl("dot");
+    }
+    if (cryptoname === "polygon") {
+      setCryptoNameUrl("matic");
+    }
+    if (cryptoname === "solana") {
+      setCryptoNameUrl("sol");
+    }
+  }, []);
+  useEffect(() => {
+    console.log("cryptonameurl", cryptonameurl);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://flask-application.herokuapp.com/${cryptonameurl}`
+        );
+        const jsonData = response.data;
+        setCoinData(jsonData);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, [cryptonameurl]);
+
+  console.log("state", location.state);
+  useEffect(() => {
+    updateData(location.state ? location.state : "bitcoin").then((vals) => {
+      console.log("vals are", vals);
+      setPData(vals[0].map((obj) => obj.priceUsd));
+      setDatalabel(
+        vals[0].map((obj) => {
+          const date = new Date(obj.date);
+          return (
+            date.getFullYear() +
+            "-" +
+            (date.getMonth() + 1) +
+            "-" +
+            date.getDate()
+          );
+        })
+      );
+
+      setcurrentbtcprice(vals[2].priceUsd);
+      setPercenatgechange(vals[2].changePercent24Hr);
+      setCryptoName(vals[2].name);
+      setMoreCrypto(vals[1]);
+      console.log("cryptoname is", cryptoname);
+
+      if (location?.state === "ethereum") {
+        setCoinName("Ethereum");
+      }
+      if (location?.state === "bitcoin") {
+        setCoinName("BITCOIN");
+      }
+      if (location?.state === "cardano") {
+        setCoinName("CARDANO");
+      }
+      if (location?.state === "polkadot") {
+        setCoinName("POLKADOT");
+      }
+      if (location?.state === "polygon") {
+        setCoinName("MATIC");
+      }
+      if (location?.state === "solana") {
+        setCoinName("SOLANA");
+      }
+    });
+  }, [location.state, cryptoname, coinname]);
+
+  const handleDate = () => {
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let numDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    for (let i = 0; i < numDaysInMonth; i++) {
+      dates[i] = i + 1;
+    }
+  };
   const handleChange1 = (event) => {
     setCrypto1(event.target.value);
   };
@@ -69,16 +258,33 @@ const IndividualCrypto = () => {
     });
   };
 
-  const handleDate = () => {
-    let today = new Date();
-    let currentMonth = today.getMonth();
-    let currentYear = today.getFullYear();
-    let numDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  /* const location = useLocation();
+    console.log("state", location.state);
 
-    for (let i = 0; i < numDaysInMonth; i++) {
-      dates[i] = i + 1;
-    }
-  };
+    useEffect(() => {
+      updateData(location.state?.index ? location.state.index : 0).then(
+        (vals) => {
+          console.log(vals);
+          setData(vals[0].map((obj) => obj.priceUsd));
+          setDatalabel(
+            vals[0].map((obj) => {
+              const date = new Date(obj.date);
+              return (
+                date.getFullYear() +
+                "-" +
+                (date.getMonth() + 1) +
+                "-" +
+                date.getDate()
+              );
+            })
+          );
+          setcurrentbtcprice(vals[1].priceUsd);
+          setPercenatgechange(vals[1].changePercent24Hr);
+          setCryptoName(vals[1].name);
+          setMoreCrypto(vals[2]);
+        }
+      );
+    }, []); */
 
   const style = {
     position: "absolute",
@@ -117,33 +323,8 @@ const IndividualCrypto = () => {
 
   const data = {
     labels:
-      view === "hour"
-        ? [
-            "12:00 AM",
-            "1:00 AM",
-            "2:00 AM",
-            "3:00 AM",
-            "4:00 AM",
-            "5:00 AM",
-            "6:00 AM",
-            "7:00 AM",
-            "8:00 AM",
-            "9:00 AM",
-            "10:00 AM",
-            "11:00 AM",
-            "12:00 PM",
-            "1:00 PM",
-            "2:00 PM",
-            "3:00 PM",
-            "4:00 PM",
-            "5:00 PM",
-            "6:00 PM",
-            "7:00 PM",
-            "8:00 PM",
-            "9:00 PM",
-            "10:00 PM",
-            "11:00 PM",
-          ]
+      view === "day"
+        ? coindata.map((item) => [item.Date])
         : view === "month"
         ? [
             "January",
@@ -159,43 +340,47 @@ const IndividualCrypto = () => {
             "November",
             "December",
           ]
-        : view === "day"
+        : view === "hour"
         ? dates
         : "",
     datasets: [
       {
         label: "Dataset 1",
-        data: [
-          20, 30, 40, 25, 15, 16, 20, 60, 10, 20, 30, 40, 25, 15, 16, 20, 60,
-          10, 20, 30, 40, 25, 15, 70, 100, 45, 17, 50, 23, 70, 100, 25,
-        ],
+        data: coindata.map((item) => item.Forecast),
         borderColor: "#00b4ff",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
   };
+  const handleNavigate = (prop) => {
+    navigate(`/individualcrypto/${prop}`);
+    window.location.reload();
+  };
 
-  const OtherCrypto = ({ name, price, change }) => {
+  const OtherCrypto = ({ name, price, change, id }) => {
     return (
-      <Link to="/individualcrypto" style={{ textDecoration: "none" }}>
-        <div className="othercrypto">
-          <span className="othercryptos1">
-            <img className="othercryptos1pic" src={btc} alt="" />
-            <p className="othercryptos1p1">{name}</p>
-          </span>
-          <span className="othercryptos2">
-            <p className="othercryptos2p1">{price}</p>
-            <p
-              style={{
-                color: `${change.slice(0, 1) === "-" ? "red" : "green"}`,
-              }}
-              className="othercryptos2p2"
-            >
-              {change}
-            </p>
-          </span>
-        </div>
-      </Link>
+      <div
+        onClick={() => {
+          navigate(`/individualcrypto/${name}`, { state: id });
+        }}
+        className="othercrypto"
+      >
+        <span className="othercryptos1">
+          <img className="othercryptos1pic" src={btc} alt="" />
+          <p className="othercryptos1p1">{name}</p>
+        </span>
+        <span className="othercryptos2">
+          <p className="othercryptos2p1">{price}</p>
+          <p
+            style={{
+              color: `${change.slice(0, 1) === "-" ? "red" : "green"}`,
+            }}
+            className="othercryptos2p2"
+          >
+            {change}
+          </p>
+        </span>
+      </div>
     );
   };
 
@@ -209,18 +394,28 @@ const IndividualCrypto = () => {
       <div className="individualcrypto">
         <span className="individualcryptos1">
           <img className="individualcryptopic" src={btc} alt="" />
-          <h1 className="individualcryptoh1">Bitcoin (BTC) Price</h1>
+          <h1 className="individualcryptoh1">{coinname} Price</h1>
         </span>
         <div className="individualcryptod1">
           <div className="individualcryptod">
             <span className="individualcryptos1">
-              <h1 className="individualcryptoh2">$ 10,000</h1>
-              <p className="individualcryptop1">-2.5%</p>
+              <h1 className="individualcryptoh2">{`$${parseFloat(
+                currentbtcprice
+              ).toFixed(2)}`}</h1>
+              <p
+                className="individualcryptop1"
+                style={{
+                  color: `${
+                    cryptopercsnatgechange?.slice(0, 1) === "-"
+                      ? "red"
+                      : "green"
+                  }`,
+                }}
+              >{`${parseFloat(cryptopercsnatgechange).toFixed(2)}%`}</p>
             </span>
-
             <div className="individualcryptograph">
               <span className="individualcryptographs1">
-                <p
+                {/*   <p
                   onClick={() => setView("hour")}
                   style={{
                     color: `${view === "hour" ? "#2683ff" : ""}`,
@@ -228,7 +423,7 @@ const IndividualCrypto = () => {
                   className="individualcryptographp"
                 >
                   Hour
-                </p>
+                </p> */}
                 <p
                   onClick={() => setView("day")}
                   style={{
@@ -238,7 +433,7 @@ const IndividualCrypto = () => {
                 >
                   Day
                 </p>
-                <p
+                {/*     <p
                   onClick={() => setView("month")}
                   style={{
                     color: `${view === "month" ? "#2683ff" : ""}`,
@@ -246,10 +441,12 @@ const IndividualCrypto = () => {
                   className="individualcryptographp"
                 >
                   Month
-                </p>
+                </p> */}
               </span>
 
               <Line options={options} data={data} />
+              <h1 className="individualcryptoh1">Past-Present Data</h1>
+              <Line options={options} data={dummydata} />
             </div>
           </div>
 
@@ -264,10 +461,12 @@ const IndividualCrypto = () => {
                   label="Crypto1"
                   onChange={handleChange1}
                 >
-                  <MenuItem value="BTC">BTC</MenuItem>
-                  <MenuItem value="BNB">BNB</MenuItem>
-                  <MenuItem value="Ethereum">Ethereum</MenuItem>
-                  <MenuItem value="Dogecoin">Dogecoin</MenuItem>
+                  <MenuItem value="BTC">CARDANO </MenuItem>
+                  <MenuItem value="BNB">BITCOIN </MenuItem>
+                  <MenuItem value="Ethereum">POLKADOT </MenuItem>
+                  <MenuItem value="Dogecoin">ETHEREUM</MenuItem>
+                  <MenuItem value="Dogecoin">MATIC</MenuItem>
+                  <MenuItem value="Dogecoin">SOLANA</MenuItem>
                 </Select>
               </FormControl>
               <input
@@ -287,10 +486,12 @@ const IndividualCrypto = () => {
                   label="Crypto2"
                   onChange={handleChange2}
                 >
-                  <MenuItem value="BTC">BTC</MenuItem>
-                  <MenuItem value="BNB">BNB</MenuItem>
-                  <MenuItem value="Ethereum">Ethereum</MenuItem>
-                  <MenuItem value="Dogecoin">Dogecoin</MenuItem>
+                  <MenuItem value="BTC">CARDANO </MenuItem>
+                  <MenuItem value="BNB">BITCOIN </MenuItem>
+                  <MenuItem value="Ethereum">POLKADOT </MenuItem>
+                  <MenuItem value="Dogecoin">ETHEREUM</MenuItem>
+                  <MenuItem value="Dogecoin">MATIC</MenuItem>
+                  <MenuItem value="Dogecoin">SOLANA</MenuItem>
                 </Select>
               </FormControl>
               <input
@@ -332,23 +533,63 @@ const IndividualCrypto = () => {
             </div>
             <div className="individualcryptod3d1">
               <h1 className="individualcryptod3h2">More Crypto</h1>
-              <OtherCrypto name="BNB" price="$200" change="+3.23%" />
-              <OtherCrypto name="Ethereum" price="$123" change="+1.26%" />
-              <OtherCrypto name="Dogecoin" price="$223" change="-0.25%" />
-              <OtherCrypto name="Dogecoin" price="$323" change="+2.22%" />
-              <OtherCrypto name="Dogecoin" price="$523" change="-0.21%" />
+              {moreCrypto?.map((val) => {
+                return (
+                  <OtherCrypto
+                    name={val.data.data.name}
+                    price={`$${parseFloat(val.data.data.priceUsd).toFixed(2)}`}
+                    change={`${parseFloat(
+                      val.data.data.changePercent24Hr
+                    ).toFixed(2)}%`}
+                    id={val.data.data.id}
+                  />
+                );
+              })}
+              {/* <OtherCrypto
+                url="ada"
+                name="CARDANO "
+                price="$200"
+                change="+3.23%"
+              />
+              <OtherCrypto
+                url="btc"
+                name="BITCOIN "
+                price="$123"
+                change="+1.26%"
+              />
+              <OtherCrypto
+                url="dot"
+                name="POLKADOT "
+                price="$223"
+                change="-0.25%"
+              />
+              <OtherCrypto
+                url="eth"
+                name="ETHEREUM "
+                price="$323"
+                change="+2.22%"
+              />
+              <OtherCrypto
+                url="matic"
+                name="MATIC "
+                price="$523"
+                change="-0.21%"
+              />
+              <OtherCrypto url="sol" name="SOLANA  " /> */}
             </div>
           </div>
         </div>
-        <h1 className="individualcryptoh3">BTC Price Live Data</h1>
+        <h1 className="individualcryptoh3">{coinname} Price Live Data</h1>
         <p className="individualcryptop2">
-          The live price of Bitcoin is $ 16,714.09 per (BTC / USD) today with a
-          current market cap of $ 321.53B USD. 24-hour trading volume is $
-          11.19B USD. BTC to USD price is updated in real-time. Bitcoin is
-          -0.03% in the last 24 hours. It has a circulating supply of 19.24M
-          USD.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus
+          dolor vitae lectus ornare laoreet. Fusce neque libero, fermentum eget
+          augue sit amet, mollis rutrum odio. Morbi elementum non metus id
+          varius. Suspendisse ultrices dui non felis faucibus, at bibendum risus
+          dictum. Morbi ut lorem ex. Etiam vel quam leo. Suspendisse sapien leo,
+          bibendum ut interdum eu, porta quis dui.
         </p>
-        <h1 className="individualcryptoh4">About Bitcoin (BTC)</h1>
+
+        <h1 className="individualcryptoh4">About {coinname}</h1>
         <p className="individualcryptop3">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus
           dolor vitae lectus ornare laoreet. Fusce neque libero, fermentum eget
