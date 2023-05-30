@@ -9,8 +9,7 @@ import Footer from "../components/Footer/Footer";
 import InfoIcon from "@mui/icons-material/Info";
 import CircularProgress from "@mui/material/CircularProgress";
 //contracts
-//import { ethers } from "./ethers-5.6.esm.min.js";
-//import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
+
 import { ethers } from "ethers";
 import { abi, contractAddress } from "./constants.js";
 
@@ -26,8 +25,7 @@ const IndividualProject = () => {
   const [values, setValues] = useState({
     name: "",
     description: "",
-    /*  file: "",
-    minimum: "", */
+    id: cookies.get("loggedinuser")[0].id,
   });
 
   const handleInput = (file) => (e) => {

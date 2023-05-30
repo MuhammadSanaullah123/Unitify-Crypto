@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
-
+import Cookies from "universal-cookie";
 //assets
 import logo from "../../assets/logo.png";
 //metamask
@@ -67,6 +67,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const cookies = new Cookies();
   const [scroll, setScroll] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -85,8 +87,12 @@ const Navbar = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    handleLogout();
   };
-
+  const handleLogout = () => {
+    cookies.remove("loggedinuser");
+    navigate("/login");
+  };
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -255,7 +261,7 @@ const Navbar = () => {
               <Link to="/home">
                 {" "}
                 <img
-                  style={{ width: "120px", height: "40px" }}
+                  style={{ width: "100px", height: "60px", color: "#00b4ff" }}
                   src={logo}
                   alt=""
                 />

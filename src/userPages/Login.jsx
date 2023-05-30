@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import Cookies from "universal-cookie";
 //mui
 import Checkbox from "@mui/material/Checkbox";
 //assets
 import guser from "./../assets/guser.svg";
 import userpic from "./../assets/user.svg";
 import passwordpic from "./../assets/password.svg";
-import fb from "./../assets/fb.svg";
-import google from "./../assets/google.svg";
 
 const Login = () => {
+  const cookies = new Cookies();
+
+  const [accounts] = useState(
+    cookies.get("accountArray") ? cookies.get("accountArray") : []
+  );
+
   const [values, setValues] = useState({
     user: "",
     pass: "",
@@ -26,7 +30,34 @@ const Login = () => {
       [e.target.name]: Value,
     });
   };
-  console.log(values);
+
+  const handleLogin = () => {
+    if (values.pass && values.user) {
+      const fitlered_accounts = accounts.filter(
+        (account) =>
+          account.user === values.user && account.pass === values.pass
+      );
+
+      if (fitlered_accounts.length > 0) {
+        handleNavigate();
+      } else {
+        alert("Credentials are wrong!");
+      }
+    } else {
+      alert("Credentials are empty!");
+    }
+  };
+  const handleNavigate = () => {
+    cookies.set(
+      "loggedinuser",
+      accounts.filter(
+        (account) =>
+          account.user === values.user && account.pass === values.pass
+      )
+    );
+    window.location.pathname = "/home";
+  };
+
   return (
     <>
       <div className="mainloginDiv">
@@ -64,7 +95,13 @@ const Login = () => {
               />
             </div>
             <div className="check-container">
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  visibility: "hidden",
+                }}
+              >
                 <Checkbox
                   className="form-check-input"
                   checked={remember}
@@ -81,11 +118,13 @@ const Login = () => {
           </div>
         </div>
         <div style={{ marginTop: "35px" }}>
-          <Link to="/home" className="l1">
-            <button className="btn1">Login</button>
+          <Link className="l1">
+            <button onClick={handleLogin} className="btn1">
+              Login
+            </button>
           </Link>
         </div>
-        <p className="mainDivp1">Or login with</p>
+        {/*    <p className="mainDivp1">Or login with</p>
         <div className="mainimgDiv">
           <div style={{ background: "#C54238" }} className="imgDiv">
             <img className="endimg" src={google} alt="" />
@@ -93,7 +132,7 @@ const Login = () => {
           <div style={{ background: "#2F4D93" }} className="imgDiv">
             <img className="endimg" src={fb} alt="" />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

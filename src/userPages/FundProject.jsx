@@ -17,6 +17,7 @@ import { abi, contractAddress } from "./constants.js";
 const FundProject = () => {
   const cookies = new Cookies();
   const { id } = useParams();
+
   const [projects] = useState(cookies.get("projects"));
   const [picname, setPicName] = useState("");
   const [preview, setPreview] = useState("");
@@ -28,6 +29,9 @@ const FundProject = () => {
   });
   const [funds, setFunds] = useState("");
   const [balance, setBalance] = useState("");
+  const [isWithdrawable] = useState(
+    cookies.get("loggedinuser")[0].id === projects[id].id ? true : false
+  );
 
   const handleFundsChange = (e) => {
     setFunds(e.target.value);
@@ -171,10 +175,22 @@ const FundProject = () => {
         ) : (
           ""
         )} */}
-        <button className="individualprojectb1" onClick={fund}>
+        <button
+          style={{
+            display: `${isWithdrawable ? "none" : ""}`,
+          }}
+          className="individualprojectb1"
+          onClick={fund}
+        >
           Fund
         </button>{" "}
-        <button className="individualprojectb1" onClick={withdraw}>
+        <button
+          style={{
+            display: `${!isWithdrawable ? "none" : ""}`,
+          }}
+          className="individualprojectb1"
+          onClick={withdraw}
+        >
           Withdraw
         </button>
         <button className="individualprojectb1" onClick={getBalance}>

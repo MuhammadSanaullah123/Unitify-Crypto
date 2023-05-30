@@ -8,8 +8,8 @@ const TermConditions = () => {
           <h6 className="h6tag">Terms and Conditions</h6>
           <p className="ptag" style={{ marginTop: "1em" }}>
             These Terms and Conditions ("Terms", "Terms and Conditions") govern
-            your relationship with https://medhelp24.com website (the "Service")
-            operated by Seafusion Trading LTD ("us", "we", or "our").
+            your relationship with https://unitifycrypto.netlify.app website
+            (the "Service") operated by Unitify LTD ("us", "we", or "our").
             <br /> Please read these Terms and Conditions carefully before using
             the Service.
             <br /> Your access to and use of the Service is conditioned on your

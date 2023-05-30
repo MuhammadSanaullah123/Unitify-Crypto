@@ -89,7 +89,13 @@ const Home = () => {
           </span>
           {option === 1 ? <Cryptotable /> : <ProjectTable />}
         </div>
-        <Link to="/individualproject" className="homeprojectbtn">
+        <Link
+          to="/individualproject"
+          className="homeprojectbtn"
+          style={{
+            display: `${option === 1 ? "none" : ""}`,
+          }}
+        >
           Add Project
         </Link>
         <div className="homed4">

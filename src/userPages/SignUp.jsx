@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+import { v4 as uuid } from "uuid";
 //mui
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -9,18 +11,26 @@ import Checkbox from "@mui/material/Checkbox";
 import guser from "./../assets/guser.svg";
 import namepic from "./../assets/name.svg";
 import passwordpic from "./../assets/password.svg";
-import fb from "./../assets/fb.svg";
-import google from "./../assets/google.svg";
+import EmailIcon from "@mui/icons-material/Email";
+
 const SignUp = () => {
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+
+  const [accounts, setAccounts] = useState(
+    cookies.get("accountArray") ? cookies.get("accountArray") : []
+  );
   const [open, setOpen] = useState(false);
   const [remember, setRemember] = useState(false);
   const [show, setShow] = useState(false);
   const [values, setValues] = useState({
+    email: "",
     user: "",
-    reg: "",
     pass: "",
     conpass: "",
+    id: uuid(),
   });
+
   const handleRemember = (event) => {
     setRemember(event.target.checked);
   };
@@ -40,7 +50,36 @@ const SignUp = () => {
       setOpen(true);
     }
   };
+
   const handleClose = () => setOpen(false);
+  const handleSubmit = () => {
+    if (
+      cookies.get("accountArray") &&
+      cookies
+        .get("accountArray")
+        .filter((account) => account.email === values.email).length > 0
+    ) {
+      alert("Email already exits");
+    }
+    if (values.pass !== values.conpass) {
+      alert("Password do not match");
+    } else {
+      if (remember) {
+        setAccounts([...accounts, values]);
+        const temp = [...accounts, values];
+        cookies.set("accountArray", temp);
+        navigate("/login");
+      } else {
+        alert("Click Terms and conditions");
+      }
+    }
+  };
+  useEffect(() => {
+    if (!cookies.get("accountArray")) {
+      console.log("he");
+      cookies.set("accountArray", accounts);
+    }
+  }, []);
 
   const style = {
     position: "absolute",
@@ -73,6 +112,21 @@ const SignUp = () => {
           <div className="smallDivS">
             <div className="input-container">
               <i className="inputimgback">
+                <EmailIcon className="inputimg" />
+                {/*  <img className="inputimg" src={namepic} alt="" /> */}
+              </i>
+              <input
+                className="input-field"
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={values.email}
+                onChange={handleInput}
+              />
+            </div>
+
+            <div className="input-container">
+              <i className="inputimgback">
                 <img className="inputimg" src={namepic} alt="" />
               </i>
               <input
@@ -84,19 +138,7 @@ const SignUp = () => {
                 onChange={handleInput}
               />
             </div>
-            <div className="input-container">
-              <i className="inputimgback">
-                <img className="inputimg" src={namepic} alt="" />
-              </i>
-              <input
-                className="input-field"
-                type="text"
-                placeholder="Registeration Number"
-                name="reg"
-                value={values.reg}
-                onChange={handleInput}
-              />
-            </div>
+
             <div className="input-container">
               <i className="inputimgback">
                 <img className="inputimg" src={passwordpic} alt="" />
@@ -126,7 +168,6 @@ const SignUp = () => {
             <div className="check-container">
               <div style={{ display: "flex" }}>
                 <Checkbox
-                  // sx={{ color: "red" }}
                   className="form-check-input"
                   checked={remember}
                   onChange={handleRemember}
@@ -161,8 +202,8 @@ const SignUp = () => {
             </p>
           </div>
         </div>
-        <div style={{ marginTop: "35px" }}>
-          <button onClick={handleOpen} className="btn1">
+        <div style={{ marginTop: "30px" }}>
+          <button onClick={handleSubmit} className="btn1">
             Sign up
           </button>
           <Modal
@@ -191,7 +232,7 @@ const SignUp = () => {
             </Box>
           </Modal>
         </div>
-        <p className="mainDivp1">Or login with</p>
+        {/*   <p className="mainDivp1">Or login with</p>
         <div className="mainimgDiv">
           <div style={{ background: "#C54238" }} className="imgDiv">
             <img className="endimg" src={google} alt="" />
@@ -200,7 +241,7 @@ const SignUp = () => {
           <div style={{ background: "#2F4D93" }} className="imgDiv">
             <img className="endimg" src={fb} alt="" />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
