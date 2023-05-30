@@ -124,15 +124,6 @@ const Login = () => {
             </button>
           </Link>
         </div>
-        {/*    <p className="mainDivp1">Or login with</p>
-        <div className="mainimgDiv">
-          <div style={{ background: "#C54238" }} className="imgDiv">
-            <img className="endimg" src={google} alt="" />
-          </div>
-          <div style={{ background: "#2F4D93" }} className="imgDiv">
-            <img className="endimg" src={fb} alt="" />
-          </div>
-        </div> */}
       </div>
     </>
   );

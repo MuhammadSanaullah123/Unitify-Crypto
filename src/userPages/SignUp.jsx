@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { v4 as uuid } from "uuid";
 //mui
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+
 import Checkbox from "@mui/material/Checkbox";
 
 //assets
@@ -20,9 +19,9 @@ const SignUp = () => {
   const [accounts, setAccounts] = useState(
     cookies.get("accountArray") ? cookies.get("accountArray") : []
   );
-  const [open, setOpen] = useState(false);
+
   const [remember, setRemember] = useState(false);
-  const [show, setShow] = useState(false);
+  const [show] = useState(false);
   const [values, setValues] = useState({
     email: "",
     user: "",
@@ -41,17 +40,7 @@ const SignUp = () => {
       [e.target.name]: Value,
     });
   };
-  console.log(values);
-  const handleOpen = () => {
-    if (remember === false) {
-      setShow(true);
-    }
-    if (remember === true) {
-      setOpen(true);
-    }
-  };
 
-  const handleClose = () => setOpen(false);
   const handleSubmit = () => {
     if (
       cookies.get("accountArray") &&
@@ -80,20 +69,6 @@ const SignUp = () => {
       cookies.set("accountArray", accounts);
     }
   }, []);
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "526px",
-    height: "158px",
-    background: "#fff",
-    borderRadius: "6px",
-    paddingLeft: "15px",
-    display: "flex",
-    flexDirection: "column",
-  };
 
   return (
     <>
@@ -206,42 +181,7 @@ const SignUp = () => {
           <button onClick={handleSubmit} className="btn1">
             Sign up
           </button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <p className="SignBoxp">Sign up as?</p>
-              <div
-                style={{
-                  width: "77%",
-                  display: "flex",
-                  justifyContent: "space-around",
-                  alignSelf: "center",
-                }}
-              >
-                <Link to="/login">
-                  <button className="SignBoxb1">Admin</button>
-                </Link>
-                <Link to="/login">
-                  <button className="SignBoxb2">User</button>
-                </Link>
-              </div>
-            </Box>
-          </Modal>
         </div>
-        {/*   <p className="mainDivp1">Or login with</p>
-        <div className="mainimgDiv">
-          <div style={{ background: "#C54238" }} className="imgDiv">
-            <img className="endimg" src={google} alt="" />
-          </div>
-
-          <div style={{ background: "#2F4D93" }} className="imgDiv">
-            <img className="endimg" src={fb} alt="" />
-          </div>
-        </div> */}
       </div>
     </>
   );
