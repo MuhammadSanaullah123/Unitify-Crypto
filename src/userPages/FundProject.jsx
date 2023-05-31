@@ -137,7 +137,14 @@ const FundProject = () => {
           placeholder="Description..."
           value={values.description}
         ></textarea>
-        <h1 className="individualprojecth3">Funds Donate:</h1>
+        <h1
+          style={{
+            display: `${isWithdrawable ? "none" : ""}`,
+          }}
+          className="individualprojecth3"
+        >
+          Funds Donate:
+        </h1>
         <input
           className="input-field"
           type="number"
@@ -145,6 +152,9 @@ const FundProject = () => {
           name="funds"
           value={funds}
           onChange={handleFundsChange}
+          style={{
+            display: `${isWithdrawable ? "none" : ""}`,
+          }}
         />
         <h1 className="individualprojecth3">Balance:</h1>
         <input

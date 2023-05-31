@@ -76,7 +76,7 @@ const SignUp = () => {
         setAccounts([...accounts, values]);
         const temp = [...accounts, values];
         cookies.set("accountArray", temp);
-        toast.success("Login Success", {
+        toast.success("Signup Success", {
           duration: 2000,
           position: "top-center",
           style: {
