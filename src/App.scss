@@ -266,7 +266,7 @@
 /***********************************************************************************/
 .mainsignupDiv {
   display: flex;
-  height: 100vh;
+  //height: 100vh;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -552,7 +552,7 @@
 .termDiv {
   // width: 95%;
   // margin: 0 auto;
-
+  padding-bottom: 50px;
   .h6tag {
     color: var(--primary);
     font-family: "Inter";
@@ -567,6 +567,24 @@
     font-style: normal;
     font-size: 17px;
     margin-top: 10px;
+  }
+  .termsconditionssignup {
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+    width: 150px;
+    height: 45px;
+    font-family: "Inter";
+    font-size: 16px;
+    margin-top: 30px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .termsconditionssignup:hover {
+    background-color: #fff;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
   }
 }
 /*---------------------------- CSS CODE END FOR USER:TERMSCONDITIONS PAGE-------------------- */

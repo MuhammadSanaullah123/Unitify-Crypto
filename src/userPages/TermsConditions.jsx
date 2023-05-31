@@ -1,6 +1,7 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const TermConditions = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div>
@@ -128,6 +129,12 @@ const TermConditions = () => {
           <p className="ptag">
             If you have any questions about these Terms, please contact us.{" "}
           </p>
+          <button
+            onClick={() => navigate("/signup")}
+            className="termsconditionssignup"
+          >
+            Sign Up
+          </button>
         </div>
       </div>
     </>

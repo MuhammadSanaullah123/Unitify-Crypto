@@ -117,12 +117,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div
-        style={{
-          padding: "50px 0 100px 0",
-        }}
-        className="mainsignupDiv"
-      >
+      <div className="mainsignupDiv">
         <div className="bigDivS">
           <div className="circleDiv">
             <div className="circleDiv2">
