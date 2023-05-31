@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import toast, { Toaster } from "react-hot-toast";
 //mui
 import Checkbox from "@mui/material/Checkbox";
 //assets
@@ -23,6 +24,7 @@ const Login = () => {
   const handleRemember = (event) => {
     setRemember(event.target.checked);
   };
+
   const handleInput = (e) => {
     const Value = e.target.value;
     setValues({
@@ -41,10 +43,24 @@ const Login = () => {
       if (fitlered_accounts.length > 0) {
         handleNavigate();
       } else {
-        alert("Credentials are wrong!");
+        toast.error("Credentials are wrong!", {
+          duration: 3000,
+          position: "top-center",
+          style: {
+            color: "red",
+            fontFamily: "Inter",
+          },
+        });
       }
     } else {
-      alert("Credentials are empty!");
+      toast.error("Credentials are empty!", {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          color: "red",
+          fontFamily: "Inter",
+        },
+      });
     }
   };
   const handleNavigate = () => {
@@ -55,7 +71,19 @@ const Login = () => {
           account.user === values.user && account.pass === values.pass
       )
     );
-    window.location.pathname = "/home";
+    toast.success("Login Success", {
+      duration: 2000,
+      position: "top-center",
+      style: {
+        color: "green",
+        fontFamily: "Inter",
+      },
+    });
+    let tID = setTimeout(function () {
+      window.location.pathname = "/home";
+
+      window.clearTimeout(tID); // clear time out.
+    }, 2000);
   };
 
   return (
@@ -117,11 +145,21 @@ const Login = () => {
             </div>
           </div>
         </div>
+
         <div style={{ marginTop: "35px" }}>
           <Link className="l1">
             <button onClick={handleLogin} className="btn1">
               Login
             </button>
+            <Toaster
+              toastOptions={{
+                style: {
+                  border: "1.5px solid",
+                  padding: "16px",
+                  fontFamily: "Inter",
+                },
+              }}
+            />
           </Link>
         </div>
       </div>

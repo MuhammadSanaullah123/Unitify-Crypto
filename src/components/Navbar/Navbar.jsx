@@ -261,7 +261,7 @@ const Navbar = () => {
               <Link to="/home">
                 {" "}
                 <img
-                  style={{ width: "100px", height: "60px", color: "#00b4ff" }}
+                  style={{ width: "120px", height: "65px", color: "#00b4ff" }}
                   src={logo}
                   alt=""
                 />

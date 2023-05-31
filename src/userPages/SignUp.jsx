@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { v4 as uuid } from "uuid";
+import toast, { Toaster } from "react-hot-toast";
 //mui
-
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import Checkbox from "@mui/material/Checkbox";
 
 //assets
@@ -48,24 +49,68 @@ const SignUp = () => {
         .get("accountArray")
         .filter((account) => account.email === values.email).length > 0
     ) {
-      alert("Email already exits");
+      toast.error("Email already exits", {
+        duration: 2000,
+        position: "top-center",
+        style: {
+          color: "#FF0000",
+          fontFamily: "Inter",
+        },
+      });
+
+      return null;
     }
     if (values.pass !== values.conpass) {
-      alert("Password do not match");
+      toast.error("Password do not match", {
+        duration: 2000,
+        position: "top-center",
+        style: {
+          color: "#FF0000",
+          fontFamily: "Inter",
+        },
+      });
+
+      return null;
     } else {
       if (remember) {
         setAccounts([...accounts, values]);
         const temp = [...accounts, values];
         cookies.set("accountArray", temp);
-        navigate("/login");
+        toast.success("Login Success", {
+          duration: 2000,
+          position: "top-center",
+          style: {
+            color: "green",
+            fontFamily: "Inter",
+          },
+        });
+        let tID = setTimeout(function () {
+          navigate("/login");
+
+          window.clearTimeout(tID);
+        }, 2000);
       } else {
-        alert("Click Terms and conditions");
+        toast("Read Terms and conditions", {
+          duration: 2000,
+          position: "top-center",
+          style: {
+            color: "#FFC000",
+            fontFamily: "Inter",
+          },
+          icon: <PriorityHighIcon />,
+
+          iconTheme: {
+            primary: "#FFC000	",
+            secondary: "#FFC000	",
+          },
+        });
+
+        return null;
       }
     }
   };
   useEffect(() => {
     if (!cookies.get("accountArray")) {
-      console.log("he");
       cookies.set("accountArray", accounts);
     }
   }, []);
@@ -181,6 +226,15 @@ const SignUp = () => {
           <button onClick={handleSubmit} className="btn1">
             Sign up
           </button>
+          <Toaster
+            toastOptions={{
+              style: {
+                border: "1.5px solid",
+                padding: "16px",
+                fontFamily: "Inter",
+              },
+            }}
+          />
         </div>
       </div>
     </>
